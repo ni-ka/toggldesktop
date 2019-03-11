@@ -33,11 +33,29 @@
 
 - (void)setTitleWithAutoCompleteItem:(AutocompleteItem *)item
 {
+	self.textColor = [ConvertHexColor hexCodeToNSColor:item.ProjectColor];
+	self.attributedStringValue = [self attributeStringWithAutoCompleteItem:item];
 }
 
-- (NSMutableAttributedString *)attributeStringWithItem:(TimeEntryViewItem *)view_item
+- (NSAttributedString *)attributeStringWithItem:(TimeEntryViewItem *)view_item
 {
-	NSString *clientTitle = [NSString stringWithFormat:@"• %@", view_item.ClientLabel];
+	return [self attributeStringWithClient:view_item.ClientLabel
+									taskID:view_item.TaskID
+									  task:view_item.TaskLabel
+								   project:view_item.ProjectLabel];
+}
+
+- (NSAttributedString *)attributeStringWithAutoCompleteItem:(AutocompleteItem *)item
+{
+	return [self attributeStringWithClient:item.ClientLabel
+									taskID:item.TaskID
+									  task:item.TaskLabel
+								   project:item.ProjectLabel];
+}
+
+- (NSAttributedString *)attributeStringWithClient:(NSString *)client taskID:(NSInteger)taskID task:(NSString *)task project:(NSString *)project
+{
+	NSString *clientTitle = [NSString stringWithFormat:@"• %@", client];
 	NSMutableAttributedString *clientName = [[NSMutableAttributedString alloc] initWithString:clientTitle];
 
 	[clientName setAttributes:
@@ -47,9 +65,9 @@
 	 }
 						range:NSMakeRange(0, [clientName length])];
 	NSMutableAttributedString *string;
-	if (view_item.TaskID != 0)
+	if (taskID != 0)
 	{
-		string = [[NSMutableAttributedString alloc] initWithString:[view_item.TaskLabel stringByAppendingString:@". "]];
+		string = [[NSMutableAttributedString alloc] initWithString:[task stringByAppendingString:@". "]];
 
 		[string setAttributes:
 		 @{
@@ -58,17 +76,17 @@
 		 }
 						range:NSMakeRange(0, [string length])];
 
-		NSMutableAttributedString *projectName = [[NSMutableAttributedString alloc] initWithString:[view_item.ProjectLabel stringByAppendingString:@" "]];
+		NSMutableAttributedString *projectName = [[NSMutableAttributedString alloc] initWithString:[project stringByAppendingString:@" "]];
 
 		[string appendAttributedString:projectName];
 	}
 	else
 	{
-		string = [[NSMutableAttributedString alloc] initWithString:[view_item.ProjectLabel stringByAppendingString:@" "]];
+		string = [[NSMutableAttributedString alloc] initWithString:[project stringByAppendingString:@" "]];
 	}
 
 	[string appendAttributedString:clientName];
-	return string;
+	return [string copy];
 }
 
 - (NSColor *)clientTextColor
