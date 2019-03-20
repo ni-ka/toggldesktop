@@ -26,7 +26,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color:rgb(85, 85, 85);font-size:13px;</string>
+   <string notr="true">font-size:13px;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -47,7 +47,7 @@
    <item>
     <widget class="QFrame" name="headerFrame">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(235, 235, 235);</string>
+      <string notr="true">background-color: palette(window);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>

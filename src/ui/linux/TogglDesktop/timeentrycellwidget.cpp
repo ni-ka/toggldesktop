@@ -69,7 +69,7 @@ void TimeEntryCellWidget::setLoadMore(bool load_more) {
     ui->groupFrame->setVisible(!load_more);
     ui->frame->setVisible(!load_more);
     if (load_more) {
-        ui->dataFrame->setStyleSheet("background-color: rgb(229,229,229);");
+        ui->dataFrame->setStyleSheet("#dataFrame { background-color: palette(window); }");
         ui->unsyncedicon->setVisible(false);
     }
 }
@@ -77,15 +77,14 @@ void TimeEntryCellWidget::setLoadMore(bool load_more) {
 void TimeEntryCellWidget::setupGroupedMode(TimeEntryView *view) {
     // Grouped Mode Setup
     group = view->Group;
-    QString style = "border-bottom:1px solid #cacaca;background-color: #FAFAFA;";
+    QString style = "border-right:2px solid palette(alternate-base);border-bottom:2px solid palette(alternate-base);background-color: palette(base);";
     QString count = "";
     QString continueIcon = ":/images/continue_light.svg";
     QString descriptionStyle = "border:none;";
     int left = 0;
     if (view->GroupItemCount && view->GroupOpen && !view->Group) {
-        style = "border-bottom:1px solid #cacaca;background-color: #EFEFEF;";
         left = 10;
-        descriptionStyle = "border:none;color:#878787";
+        descriptionStyle = "border:none;color:palette(mid)";
     }
     ui->description->setStyleSheet(descriptionStyle);
     ui->descProjFrame->layout()->setContentsMargins(left, 9, 9, 9);
