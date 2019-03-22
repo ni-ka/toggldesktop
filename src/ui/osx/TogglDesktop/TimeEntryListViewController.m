@@ -37,7 +37,7 @@ static NSString *kFrameKey = @"frame";
 @property (weak) IBOutlet TimeEntryCollectionView *collectionView;
 @property (strong, nonatomic) TimeEntryEmptyView *emptyView;
 @property (weak) IBOutlet NSBox *emptyViewContainerView;
-
+@property (strong, nonatomic) EditorPopover *timeEntrypopover;
 @end
 
 @implementation TimeEntryListViewController
@@ -690,6 +690,11 @@ extern void *ctx;
 - (void)emptyViewDidTapOnLoadMore
 {
 	toggl_load_more(ctx);
+}
+
+- (BOOL)isEditorOpen
+{
+	return self.timeEntrypopover.shown;
 }
 
 @end
