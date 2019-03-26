@@ -8,8 +8,10 @@
 
 import Cocoa
 
+@IBDesignable
 final class VerticallyCenteredTextFieldCell: NSTextFieldCell {
 
+    @IBInspectable var focusRingCornerRadius: CGFloat = 0
     private let leftPadding: CGFloat = 8.0
     private var isEditingOrSelecting = false
 
@@ -59,5 +61,20 @@ final class VerticallyCenteredTextFieldCell: NSTextFieldCell {
         isEditingOrSelecting = true;
         super.edit(withFrame: newRect, in: controlView, editor: textObj, delegate: delegate, event: event)
         isEditingOrSelecting = false
+    }
+
+    override func drawFocusRingMask(withFrame cellFrame: NSRect, in controlView: NSView) {
+
+        // Draw default
+        guard focusRingCornerRadius > 0.0 else {
+            super.drawFocusRingMask(withFrame: cellFrame, in: controlView)
+            return
+        }
+
+        // Custome
+        // Make forcus ring frame fit with cell size
+        let newFrame = cellFrame.insetBy(dx: 2, dy: 1)
+        let path = NSBezierPath(roundedRect: newFrame, xRadius: focusRingCornerRadius, yRadius: focusRingCornerRadius)
+        path.fill()
     }
 }
